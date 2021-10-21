@@ -13,8 +13,10 @@ app.get('/posts', (req: express.Request, res: express.Response) => {
     { id: 3, content: 'hello3' },
   ]);
 });
-
-// 3010 포트로 서버 실행
+app.get('/sendTest', (req:Express.Request, res:express.Response) => {
+    res.send('send');
+})
+// 3000 포트로 서버 실행
 app.listen(3000, () => {
   console.log('실행중');
 });
