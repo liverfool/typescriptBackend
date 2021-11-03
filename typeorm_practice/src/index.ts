@@ -1,28 +1,31 @@
 import * as express from 'express';
-import { userInfo } from 'os';
 import "reflect-metadata";
-import {Connection, createConnection} from "typeorm";
-import {User} from "./entity/User";
+import { createConnection } from 'typeorm';
+import { User } from './entity/User';
 import * as bodyParser from 'body-parser';
-const app:express.Application = express();
-
+const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.json())
+
+//create
+app.get('/', async(req:express.Request, res:express.Response) => {
+    res.sendFile(__dirname + '/login.html')
+})
+app.post('/users', async(req:express.Request, res:express.Response) => {
+    const {name,email,role} = req.body;
+    
+    try{
+        const user = User.create({ name,email,role })
+
+        await user.save()
+
+        return res.status(201).json(user)
+    } catch(err){
+        console.log(err)
+        return res.status(500).json(err);
+    }
+})
 
 createConnection().then(async connection => {
-
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = `mun`;
-    user.lastName = `min`;
-    user.age = 17;
-    user.middleName = 'jeong'
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
-
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(User);
-    console.log("Loaded users: ", users);
-
-    console.log("Here you can setup and run express/koa/any other framework.");
-
+    app.listen(3000, () => console.log('start'));
 }).catch(error => console.log(error));
