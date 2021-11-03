@@ -10,9 +10,11 @@ export class User {
     firstName: string;
 
     @Column()
+    middleName: string;
+
+    @Column()
     lastName: string;
 
     @Column()
     age: number;
-
 }
