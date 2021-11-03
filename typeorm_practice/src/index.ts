@@ -25,7 +25,6 @@ app.post('/users', async(req:express.Request, res:express.Response) => {
         return res.status(500).json(err);
     }
 })
-
 createConnection().then(async connection => {
     app.listen(3000, () => console.log('start'));
 }).catch(error => console.log(error));
