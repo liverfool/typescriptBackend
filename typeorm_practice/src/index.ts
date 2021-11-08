@@ -11,15 +11,25 @@ app.use(express.json())
 app.get('/', async(req:express.Request, res:express.Response) => {
     res.sendFile(__dirname + '/login.html')
 })
+// create
 app.post('/users', async(req:express.Request, res:express.Response) => {
     const {name,email,role} = req.body;
-    
     try{
         const user = User.create({ name,email,role })
 
         await user.save()
-
+        console.log(user);
         return res.status(201).json(user)
+    } catch(err){
+        console.log(err)
+        return res.status(500).json(err);
+    }
+})
+//read
+app.get('/user', async(req:express.Request, res:express.Response) => {
+    try{
+        const users = await User.find()
+        return res.json(users)
     } catch(err){
         console.log(err)
         return res.status(500).json(err);
