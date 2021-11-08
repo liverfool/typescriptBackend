@@ -45,4 +45,15 @@ const usersUpdate = async(req,res) => {
         return res.json(e)
     }
 }
-export {user,users,start,usersUpdate}
+const usersDelete = async(req,res) => {
+    const uuid = req.params.uuid
+    try {
+        const user = await User.findOneOrFail({uuid})
+        await user.remove()
+        return res.json({message : 'delete user successfully'});
+    } catch (e) {
+        console.log(e)
+        return res.json(e)
+    }
+}
+export {user,users,start,usersUpdate,usersDelete}
