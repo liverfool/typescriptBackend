@@ -13,11 +13,11 @@ const user = async(req,res) => {
     try{
         const user = User.create({ name,email,role })
         await user.save()
-        console.log(user);
+        console.log(user)
         return res.json(user)
     } catch(e){
         console.log(e)
-        return res.json(e);
+        return res.json(e)
     }
 }
 const users = async(req,res) => {

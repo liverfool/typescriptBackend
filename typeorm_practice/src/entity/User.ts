@@ -3,7 +3,6 @@ import { v4 as uuid} from 'uuid'
 
 @Entity()
 export class User extends BaseEntity{
-
     @PrimaryGeneratedColumn()
     id: number;
 

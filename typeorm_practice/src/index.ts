@@ -1,12 +1,13 @@
 import * as express from 'express';
 import "reflect-metadata";
 import { createConnection } from 'typeorm';
-import { User } from './entity/User';
 import { user,users,usersUpdate,usersDelete,start,usersFind } from './service/user';
+const tokenRouter = require('./routes/token')
 import * as bodyParser from 'body-parser';
 const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
+app.use('/token', tokenRouter)
 
 app.get('/', async(req:express.Request,res:express.Response) => {
     start(req,res)
