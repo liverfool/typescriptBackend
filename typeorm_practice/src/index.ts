@@ -2,14 +2,14 @@ import * as express from 'express';
 import "reflect-metadata";
 import { createConnection } from 'typeorm';
 import { User } from './entity/User';
-import { user,users,usersUpdate,usersDelete } from './service/user';
+import { user,users,usersUpdate,usersDelete,start } from './service/user';
 import * as bodyParser from 'body-parser';
 const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 
-app.get('/', async(req,res) => {
-    res.sendFile(__dirname + '/login.html')
+app.get('/', async(req:express.Request,res:express.Response) => {
+    start(req,res)
 })
 app.post('/user', async(req:express.Request, res:express.Response) => {
     user(req,res)

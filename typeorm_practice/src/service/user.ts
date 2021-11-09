@@ -5,7 +5,8 @@ const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
 
 const start = async(req,res) => {
-    res.sendFile(__dirname + '../views/login.html')
+    res.send({message : 'start website'})
+    console.log('start')
 }
 const user = async(req,res) => {
     const {name,email,role} = req.body;
@@ -13,7 +14,7 @@ const user = async(req,res) => {
         const user = User.create({ name,email,role })
         await user.save()
         console.log(user);
-        return res.status(201).json(user)
+        return res.json(user)
     } catch(e){
         console.log(e)
         return res.json(e);
@@ -50,7 +51,7 @@ const usersDelete = async(req,res) => {
     try {
         const user = await User.findOneOrFail({uuid})
         await user.remove()
-        return res.json({message : 'delete user successfully'});
+        return res.status(201).json({message : 'delete user successfully'});
     } catch (e) {
         console.log(e)
         return res.json(e)
