@@ -2,7 +2,7 @@ import * as express from 'express';
 import "reflect-metadata";
 import { createConnection } from 'typeorm';
 import { User } from './entity/User';
-import { user,users,usersUpdate,usersDelete,start } from './service/user';
+import { user,users,usersUpdate,usersDelete,start,usersFind } from './service/user';
 import * as bodyParser from 'body-parser';
 const app = express()
 app.use(bodyParser.urlencoded({extended:true}))
@@ -20,8 +20,11 @@ app.get('/users', async(req:express.Request, res:express.Response) => {
 app.put('/users/:uuid', async(req:express.Request, res:express.Response) => {
     usersUpdate(req,res)
 })
-app.delete('/user/:uuid', async(req:express.Request, res:express.Response) => {
+app.delete('/users/:uuid', async(req:express.Request, res:express.Response) => {
     usersDelete(req,res)
+})
+app.get('/users/:uuid', async(req:express.Request,res:express.Response) => {
+    usersFind(req,res)
 })
 createConnection().then(async connection => {
     app.listen(3000, () => console.log('start'));

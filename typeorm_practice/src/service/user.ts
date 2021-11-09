@@ -54,7 +54,17 @@ const usersDelete = async(req,res) => {
         return res.status(201).json({message : 'delete user successfully'});
     } catch (e) {
         console.log(e)
-        return res.json(e)
+        return res.json({error:'something went wrong'})
     }
 }
-export {user,users,start,usersUpdate,usersDelete}
+const usersFind = async(req,res) => {
+    const uuid = req.params.uuid
+    try {
+        const user = await User.findOneOrFail({uuid})
+        return res.status(201).json(user);
+    } catch (e) {
+        console.log(e)
+        return res.json({user: 'User not found'})
+    }
+}
+export {user,users,start,usersUpdate,usersDelete,usersFind}
